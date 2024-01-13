@@ -1,8 +1,5 @@
 #include "list.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stddef.h>
 
 typedef struct _doubly_node {
     int val;
@@ -37,14 +34,22 @@ Node* Node_create(int val) {
 }
 
 void List_destroy(List** L_ref) {
+    printf("Chamando Destroy\n");
     List* L = *L_ref;
+    Node* p = L->begin;
     Node* aux = (Node*)NULL;
 
-    for (Node* p = L->begin; p != NULL; p = p->prev) {
+    while (p != NULL) {
         aux = p;
         p = p->next;
         free(aux);
     }
+
+    // for (Node* p = L->begin; p != NULL; p = p->prev) {
+    //     aux = p;
+    //     p = p->next;
+    //     free(aux);
+    // }
 
     free(L);
     *L_ref = (List*)NULL;
@@ -56,12 +61,14 @@ bool List_is_empty(const List* L) {
 
 void List_add_first(List* L, int val) {
     Node* p = Node_create(val);
+    p->next = L->begin;
 
     if (List_is_empty(L)) {
         L->end = p;
     }
-    p->next = L->begin;
-    L->begin->prev = p;
+    else {
+        L->begin->prev = p;
+    }
     L->begin = p;
     L->size++;
 }
@@ -70,8 +77,54 @@ void List_add_first(List* L, int val) {
 void List_add_last(List* L, int val) {
     Node* p = Node_create(val);
 
-    L->end->next = p;
-    p->prev = L->end;
-    L->end;
-    L->size++;
+    if (List_is_empty(L)) {
+        L->begin = p;
+    }
+    else {
+        L->end->next = p;
+    }
+
+        p->prev = L->end;
+        L->end = p;
+        L->size++;    
+}
+
+void List_print(const List* L) {
+    Node* p = L->begin;
+
+    printf("L -> begin -> ");
+    while(p != NULL) {
+        printf("%d -> ", p->val);
+        p = p->next;
+    }
+    printf("NULL\n");
+
+    if (L->end == NULL) {
+        puts("L->end = NULL");
+    } 
+    else {
+        printf("L->end = %d\n", L->end->val);
+    }
+    
+    printf("Size = %lu\n", L->size);
+}
+
+void List_inverted_print(const List* L) {
+    Node* p = L->end;
+
+    printf("L -> end -> ");
+    while(p != NULL) {
+        printf("%d -> ", p->val);
+        p = p->prev;
+    }
+    printf("NULL\n");
+
+    if (L->begin == NULL) {
+        puts("L->begin = NULL");
+    }
+    else {
+        printf("L->begin = %d\n", L->begin->val);
+    }
+    
+    printf("Size = %lu\n", L->size);
 }
