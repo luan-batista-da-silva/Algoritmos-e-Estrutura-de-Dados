@@ -8,17 +8,20 @@ int main() {
 
     while (option != 0)
     {
-        puts("+-------------------------------------------+");
-        puts("| 0 - Finalizar Programa                    |");
-        puts("| 1 - Criar uma Nova Lista Vazia            |");
-        puts("| 2 - Verificar se a Lista eh Vazia         |");
-        puts("| 3 - Destruir a Lista                      |");
-        puts("| 4 - Adicionar Elemento no Inicio da Lista |");
-        puts("| 5 - Adicionar Elemento no Final da Lista  |");
-        puts("| 6 - Remover Elemento da Lista             |");
-        puts("| 7 - Mostrar a Lista                       |");
-        puts("| 8 - Mostrar a Lista Invertida             |");
-        puts("+-------------------------------------------+");
+        puts("+-------------------------------------------------+");
+        puts("| 0 - Finalizar Programa                          |");
+        puts("| 1 - Criar uma Nova Lista Vazia                  |");
+        puts("| 2 - Verificar se a Lista eh Vazia               |");
+        puts("| 3 - Destruir a Lista                            |");
+        puts("| 4 - Adicionar Elemento no Inicio da Lista       |");
+        puts("| 5 - Adicionar Elemento no Final da Lista        |");
+        puts("| 6 - Remover Elemento do Inicio da Lista         |");
+        puts("| 7 - Remover Elemento do Final da Lista          |");
+        puts("| 8 - Remover Primeiro Valor Especifico da Lista  |");
+        puts("| 9 - Remover Todos Valores Especifico da Lista   |");
+        puts("| 10 - Mostrar a Lista                            |");
+        puts("| 11 - Mostrar a Lista Invertida                  |");
+        puts("+-------------------------------------------------+");
     
         puts("Escolha a Operacao: ");
         scanf("%d", &option);
@@ -63,21 +66,30 @@ int main() {
             
             List_add_last(L, val);
             break;
-        // case 6:
-        //     puts("Digite o valor a ser Removido da Lista: ");
-        //     scanf("%d", &val);
-
-        //     LinkedList_remove(L, val);
-        //     break;
+        case 6:
+            List_remove_first(L);
+            break;
         case 7:
-            List_print(L);
+            List_remove_last(L);
             break;
         case 8:
+            puts("Digite o valor a ser Removido da Lista: ");
+            scanf("%d", &val);
+
+            List_remove_first_val(L, val);
+            break;
+        case 9:
+            puts("Digite o valor a ser Removido de toda a Lista: ");
+            scanf("%d", &val);
+
+            List_remove_all_val(L, val);
+            break;
+        case 10:
+            List_print(L);
+            break;
+        case 11:
             List_inverted_print(L);
             break;
-        // case 9:
-        //     printf("Size = %ld\n", (L));
-        //     break;
         default:
             break;
         }
@@ -95,6 +107,8 @@ int main() {
     if (L != NULL) {
         List_destroy(&L);
     }
+
+    puts("Programa Finalizado!");
 
     return 0;
 }

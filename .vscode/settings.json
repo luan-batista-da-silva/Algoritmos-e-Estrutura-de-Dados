@@ -4,5 +4,6 @@
         "stdio.h": "c",
         "stdbool.h": "c",
         "list.h": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

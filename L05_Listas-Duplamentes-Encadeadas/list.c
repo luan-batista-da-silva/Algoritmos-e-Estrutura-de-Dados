@@ -128,3 +128,129 @@ void List_inverted_print(const List* L) {
     
     printf("Size = %lu\n", L->size);
 }
+
+void List_remove_first(List* L) {
+    if (!List_is_empty(L)) {
+        Node* p = L->begin;
+        L->begin = p->next;
+        
+        if (L->size == 1) {
+            L->end = p->next;
+        }
+        else {
+            L->begin->prev = p->prev;
+        }
+
+        free(p);
+        L->size--;
+    }
+    else {
+        puts("[ERROR] Nao eh possivel remover elementos de uma lista vazia!");
+    }
+}
+
+
+void List_remove_last(List* L) {
+    if (!List_is_empty(L)) {
+        Node* p = L->end;
+        L->end = p->prev;
+
+        if (L->size == 1) {
+            L->begin = p->prev;
+        }
+        else {
+            L->end->next = p->next;
+        }
+
+        free(p);
+        L->size--;
+    }
+    else {
+        puts("[ERROR] Nao eh possivel remover elementos de uma lista vazia!");
+    }
+}
+void List_remove_first_val(List* L, int val) {
+    if (!List_is_empty(L)) {
+        
+
+        if (L->begin->val == val) {
+            List_remove_first(L);
+        }
+        else if (L->end->val == val) {
+            List_remove_last(L);
+        }
+        else {
+            Node* p = L->begin->next;
+            // Node* ant = L->begin;
+            // Node* prox = p->next;
+            Node* aux = L->begin;
+            
+            while (p != NULL)
+            {
+                if (p->val == val) {
+                    // ant->next = prox;
+                    // prox->prev = ant;
+                    aux->next = p->next;
+                    p->next->prev = aux;
+                    free(p);
+                    L->size--;
+                    break;
+                }
+                // ant = p;
+                // p = prox;
+                // prox = prox->next;
+                aux = p;
+                p = p->next;
+            }
+        }
+        
+    }
+    else {
+        puts("[ERROR] Nao eh possivel remover elementos de uma lista vazia!");        
+    }
+}
+
+void List_remove_all_val(List* L, int val){
+    if (!List_is_empty(L)) {
+    Node* p = L->begin->next;
+    Node* aux = L->begin;
+
+        while (p != NULL)
+        {    
+            
+            // Node* ant = L->begin;
+            // Node* prox = p->next;
+            
+                
+
+            if (L->begin->val == val) {
+                List_remove_first(L);
+            }
+            if (L->end->val == val) {
+                List_remove_last(L);
+            }
+            if (List_is_empty(L)) {
+                break;
+            }
+            else {
+                if (p->val == val) {
+                    // ant->next = prox;
+                    // prox->prev = ant;
+                    aux->next = p->next;
+                    p->next->prev = aux;
+                    free(p);
+                    L->size--;
+                }
+                    // ant = p;
+                    // p = prox;
+                    // prox = prox->next;
+            }
+            aux = p;
+            p = p->next;
+        }
+        
+    }
+    else {
+        puts("[ERROR] Nao eh possivel remover elementos de uma lista vazia!");        
+    }
+}
